@@ -1,0 +1,85 @@
+doctype html  
+html(lang='en')  
+  head
+    title Battle of the Platforms
+    link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Poppins:100,400,700|Space+Mono")
+    link(rel="stylesheet", href="app.css")
+  body
+    input#reqQuery(type="hidden" value=reqQuery)
+    .container
+      header#Header
+        img.logo(src="images/bop.svg", alt="BOP")
+        form#search(action='/')
+
+          select#firstPlatform.select(name="platform1")
+            option(disabled selected value style='display:none') Select Platform
+            option(value='binance') Binance
+            option(value='bittrex') BitTrex
+            option(value='poloniex') Poloniex
+            option(value='kucoin') Kucoin
+            option(value='livecoin') Livecoin
+            option(value='cryptopia') Cryptopia
+            option(value='hitbtc') HitBTC
+            option(value='bleutrade') BleuTrade
+            option(value='cex') Cex
+          
+          select#secondPlatform.select(name="platform2")
+            option(disabled selected value style='display:none') Select Platform        
+            option(value='binance') Binance
+            option(value='bittrex') BitTrex
+            option(value='poloniex') Poloniex
+            option(value='kucoin') Kucoin
+            option(value='livecoin') Livecoin
+            option(value='cryptopia') Cryptopia
+            option(value='hitbtc') hitbtc
+            option(value='bleutrade') bleutrade
+            option(value='cex') Cex
+
+          input#diffBox.number(type="number" name='diff' min='0' max='99' value='0')
+          button(type="submit").submit
+            svg.feather.feather-search(xmlns='http://www.w3.org/2000/svg', width='24', height='24', viewbox='0 0 24 24', fill='none', stroke='currentColor', stroke-width='2', stroke-linecap='round', stroke-linejoin='round')
+              circle(cx='11', cy='11', r='8')
+              line(x1='21', y1='21', x2='16.65', y2='16.65')
+
+
+      unless data == null
+        ul#result
+          each result in data
+            li
+              .result-header
+                .coin  #{result.coin}
+                .diff #{result.diff}%
+              .platforms_data
+                .platform1
+                  span.ptitle #{result.platform1.pf}
+                  span Ask Price: #{result.platform1.ask}
+                  span Bid Price: #{result.platform1.bid}
+                  span Volume:    #{result.platform1.vol}
+                if result.which === '1<2'
+                  .indicator
+                    svg.feather.feather-chevron-left(xmlns='http://www.w3.org/2000/svg', width='24', height='24', viewbox='0 0 24 24', fill='none', stroke='currentColor', stroke-width='2', stroke-linecap='round', stroke-linejoin='round')
+                      defs
+                        lineargradient#gradient
+                          stop(offset='10%', stop-color='#ABDCFF')
+                          stop(offset='90%', stop-color='#0396FF')
+                      polyline(points='15 18 9 12 15 6')
+                else             
+                  .indicator     
+                    svg.feather.feather-chevron-right(xmlns='http://www.w3.org/2000/svg', width='24', height='24', viewbox='0 0 24 24', fill='none', stroke='currentColor', stroke-width='2', stroke-linecap='round', stroke-linejoin='round')
+                      defs
+                        lineargradient#gradient
+                          stop(offset='10%', stop-color='#FDEB71')
+                          stop(offset='90%', stop-color='#F8D800')
+                      polyline(points='9 18 15 12 9 6')
+
+                .platform2   
+                  span.ptitle #{result.platform2.pf}               
+                  span Ask Price: #{result.platform2.ask}
+                  span Bid Price: #{result.platform2.bid}
+                  span Volume:    #{result.platform2.vol}
+      else
+        h1.no-result Sorry we have Peace among us!
+    
+
+
+    script(src="script.js")
